@@ -1,0 +1,379 @@
+{
+    "openapi": "3.0.0",
+    "info": {
+        "title": "REST API для справочника организаций",
+        "description": "API для работы с организациями, зданиями и деятельностями.",
+        "version": "1.0.0"
+    },
+    "servers": [
+        {
+            "url": "http://localhost/api/v1",
+            "description": "Локальный сервер"
+        }
+    ],
+    "paths": {
+        "/api/v1/activities": {
+            "get": {
+                "tags": [
+                    "Activities"
+                ],
+                "summary": "Получить список видов деятельности",
+                "operationId": "95761a10a8d473dbd3dd1dce4f121d88",
+                "responses": {
+                    "200": {
+                        "description": "Список видов деятельности"
+                    }
+                }
+            }
+        },
+        "/api/v1/activities/tree": {
+            "get": {
+                "tags": [
+                    "Activities"
+                ],
+                "summary": "Получить дерево видов деятельности",
+                "operationId": "42870a1da3f93f07013f3943b846cdc1",
+                "responses": {
+                    "200": {
+                        "description": "Дерево видов деятельности"
+                    }
+                }
+            }
+        },
+        "/api/v1/buildings": {
+            "get": {
+                "tags": [
+                    "Buildings"
+                ],
+                "summary": "Получить список зданий",
+                "operationId": "9f193058e5003964427f14c0c664a723",
+                "responses": {
+                    "200": {
+                        "description": "Список зданий"
+                    }
+                }
+            }
+        },
+        "/api/v1/organizations": {
+            "get": {
+                "tags": [
+                    "Organizations"
+                ],
+                "summary": "Получить список организаций",
+                "operationId": "54ffd98fe34a49c738c616139213bf8a",
+                "responses": {
+                    "200": {
+                        "description": "Список организаций",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "type": "array",
+                                    "items": {
+                                        "properties": {
+                                            "id": {
+                                                "type": "integer",
+                                                "example": 1
+                                            },
+                                            "name": {
+                                                "type": "string",
+                                                "example": "ООО Рога и Копыта"
+                                            },
+                                            "phone_numbers": {
+                                                "type": "array",
+                                                "items": {
+                                                    "type": "string",
+                                                    "example": "2-222-222"
+                                                }
+                                            },
+                                            "building_id": {
+                                                "type": "integer",
+                                                "example": 1
+                                            }
+                                        },
+                                        "type": "object"
+                                    }
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "/api/v1/organizations/{id}": {
+            "get": {
+                "tags": [
+                    "Organizations"
+                ],
+                "summary": "Получить организацию по ID",
+                "operationId": "cf108afa69aa8de272788f058d3a478b",
+                "parameters": [
+                    {
+                        "name": "id",
+                        "in": "path",
+                        "required": true,
+                        "schema": {
+                            "type": "integer"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Информация об организации",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "properties": {
+                                        "id": {
+                                            "type": "integer",
+                                            "example": 1
+                                        },
+                                        "name": {
+                                            "type": "string",
+                                            "example": "ООО Рога и Копыта"
+                                        },
+                                        "phone_numbers": {
+                                            "type": "array",
+                                            "items": {
+                                                "type": "string",
+                                                "example": "2-222-222"
+                                            }
+                                        },
+                                        "building_id": {
+                                            "type": "integer",
+                                            "example": 1
+                                        }
+                                    },
+                                    "type": "object"
+                                }
+                            }
+                        }
+                    },
+                    "404": {
+                        "description": "Организация не найдена"
+                    }
+                }
+            }
+        },
+        "/api/v1/organizations/building/{buildingId}": {
+            "get": {
+                "tags": [
+                    "Organizations"
+                ],
+                "summary": "Получить организации по ID здания",
+                "operationId": "20258809bd3a1edcb5764a7787bdbcb4",
+                "parameters": [
+                    {
+                        "name": "buildingId",
+                        "in": "path",
+                        "required": true,
+                        "schema": {
+                            "type": "integer"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Список организаций",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "type": "array",
+                                    "items": {
+                                        "properties": {
+                                            "id": {
+                                                "type": "integer",
+                                                "example": 1
+                                            },
+                                            "name": {
+                                                "type": "string",
+                                                "example": "ООО Рога и Копыта"
+                                            },
+                                            "building_id": {
+                                                "type": "integer",
+                                                "example": 1
+                                            }
+                                        },
+                                        "type": "object"
+                                    }
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "/api/v1/organizations/activity/{activityId}": {
+            "get": {
+                "tags": [
+                    "Organizations"
+                ],
+                "summary": "Получить организации по ID вида деятельности",
+                "operationId": "d6e4b91f9ec1359d14a4ce09f6eadfc5",
+                "parameters": [
+                    {
+                        "name": "activityId",
+                        "in": "path",
+                        "required": true,
+                        "schema": {
+                            "type": "integer"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Список организаций",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "type": "array",
+                                    "items": {
+                                        "properties": {
+                                            "id": {
+                                                "type": "integer",
+                                                "example": 1
+                                            },
+                                            "name": {
+                                                "type": "string",
+                                                "example": "ООО Рога и Копыта"
+                                            },
+                                            "activity_id": {
+                                                "type": "integer",
+                                                "example": 1
+                                            }
+                                        },
+                                        "type": "object"
+                                    }
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "/api/v1/organizations/search": {
+            "get": {
+                "tags": [
+                    "Organizations"
+                ],
+                "summary": "Поиск организаций по имени",
+                "operationId": "2b1570443ca181caae067fed255f36cf",
+                "parameters": [
+                    {
+                        "name": "query",
+                        "in": "query",
+                        "required": true,
+                        "schema": {
+                            "type": "string"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Результаты поиска",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "type": "array",
+                                    "items": {
+                                        "properties": {
+                                            "id": {
+                                                "type": "integer",
+                                                "example": 1
+                                            },
+                                            "name": {
+                                                "type": "string",
+                                                "example": "ООО Рога и Копыта"
+                                            }
+                                        },
+                                        "type": "object"
+                                    }
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "/api/v1/organizations/radius": {
+            "get": {
+                "tags": [
+                    "Organizations"
+                ],
+                "summary": "Получить организации в радиусе",
+                "operationId": "90dc212efefd5e08c220c4d33fa6db07",
+                "parameters": [
+                    {
+                        "name": "latitude",
+                        "in": "query",
+                        "required": true,
+                        "schema": {
+                            "type": "number",
+                            "format": "float"
+                        }
+                    },
+                    {
+                        "name": "longitude",
+                        "in": "query",
+                        "required": true,
+                        "schema": {
+                            "type": "number",
+                            "format": "float"
+                        }
+                    },
+                    {
+                        "name": "radius",
+                        "in": "query",
+                        "required": true,
+                        "schema": {
+                            "type": "number",
+                            "format": "float"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Список организаций",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "type": "array",
+                                    "items": {
+                                        "properties": {
+                                            "id": {
+                                                "type": "integer",
+                                                "example": 1
+                                            },
+                                            "name": {
+                                                "type": "string",
+                                                "example": "ООО Рога и Копыта"
+                                            },
+                                            "building_id": {
+                                                "type": "integer",
+                                                "example": 1
+                                            }
+                                        },
+                                        "type": "object"
+                                    }
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        }
+    },
+    "tags": [
+        {
+            "name": "Activities",
+            "description": "Activities"
+        },
+        {
+            "name": "Buildings",
+            "description": "Buildings"
+        },
+        {
+            "name": "Organizations",
+            "description": "Organizations"
+        }
+    ]
+}
