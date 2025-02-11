@@ -2,6 +2,7 @@
 
 namespace App\Providers;
 
+
 use App\Contracts\ActivityRepositoryInterface;
 use App\Contracts\BuildingRepositoryInterface;
 use App\Contracts\OrganizationRepositoryInterface;
@@ -17,6 +18,8 @@ class AppServiceProvider extends ServiceProvider
      */
     public function register(): void
     {
+        $loader = \Illuminate\Foundation\AliasLoader::getInstance();
+        $loader->alias('Debugbar', \Barryvdh\Debugbar\Facades\Debugbar::class);
         $this->app->bind(OrganizationRepositoryInterface::class, OrganizationRepository::class);
         $this->app->bind(BuildingRepositoryInterface::class, BuildingRepository::class);
         $this->app->bind(ActivityRepositoryInterface::class, ActivityRepository::class);

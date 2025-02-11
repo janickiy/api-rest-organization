@@ -41,5 +41,9 @@
 ---
 
 ## Документация API
+Генерация swagger документации
+
+php artisan l5-swagger:generate
+
 Документация доступна по адресу:
 [http://localhost/api/documentation](http://localhost/api/documentation)
