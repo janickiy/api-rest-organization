@@ -32,9 +32,9 @@ class OrganizationController extends Controller
      *         response=200,
      *         description="Получить список всех организаций",
      *         @OA\JsonContent(
-     *             @OA\Property(property="id", type="integer", example=1),
+     *             @OA\Property(property="id", description="ID организации", type="integer", example=1),
      *             @OA\Property(property="building_id", type="integer", example=1),
-     *             @OA\Property(property="name", type="string", example="ООО Рога и Копыта"),
+     *             @OA\Property(property="name", description="Название организации", type="string", example="ООО Рога и Копыта"),
      *             @OA\Property(property="phone_numbers", type="string", example="{}"),
      *             @OA\Property(property="created_at", type="string", example="2024-05-20T14:00:00.000000Z"),
      *             @OA\Property(property="updated_at", type="string", example="2024-05-20T14:00:00.000000Z")
@@ -181,6 +181,25 @@ class OrganizationController extends Controller
      *         @OA\JsonContent(
      *             @OA\Property(property="message", type="string", example="Organization not found")
      *         )
+     *     ),
+     *     @OA\Response(
+     *         response=422,
+     *         description="Validation error",
+     *         @OA\JsonContent(
+     *             @OA\Property(property="meta", type="object",
+     *                 @OA\Property(property="code", type="number", example=422),
+     *                 @OA\Property(property="status", type="string", example="error"),
+     *                 @OA\Property(property="message", type="object",
+     *                     @OA\Property(property="email", type="array", collectionFormat="multi",
+     *                        @OA\Items(
+     *                          type="string",
+     *                          example="The query field is required.",
+     *                          )
+     *                      ),
+     *                  ),
+     *              ),
+     *              @OA\Property(property="data", type="object", example={}),
+     *          )
      *     )
      * )
      */
@@ -189,7 +208,6 @@ class OrganizationController extends Controller
         $query = $request->input('query');
         return response()->json($this->organizationService->searchOrganizations($query));
     }
-
 
     /**
      * @OA\Get(
@@ -230,7 +248,26 @@ class OrganizationController extends Controller
      *         @OA\JsonContent(
      *             @OA\Property(property="message", type="string", example="Organization not found")
      *         )
-     *     )
+     *     ),
+     *     @OA\Response(
+     *         response=422,
+     *         description="Validation error",
+     *         @OA\JsonContent(
+     *             @OA\Property(property="meta", type="object",
+     *                  @OA\Property(property="code", type="number", example=422),
+     *                  @OA\Property(property="status", type="string", example="error"),
+     *                  @OA\Property(property="message", type="object",
+     *                      @OA\Property(property="email", type="array", collectionFormat="multi",
+     *                         @OA\Items(
+     *                           type="string",
+     *                           example="The latitude field is required.",
+     *                          )
+     *                       ),
+     *                   ),
+     *               ),
+     *               @OA\Property(property="data", type="object", example={}),
+     *           )
+     *      )
      * )
      */
     public function byRadius(RadiusRequest $request): JsonResponse
