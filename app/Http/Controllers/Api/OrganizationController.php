@@ -4,9 +4,9 @@ namespace App\Http\Controllers\Api;
 
 use App\Http\Controllers\Controller;
 use App\Http\Requests\Organization\RadiusRequest;
+use App\Http\Requests\Organization\QueryRequest;
 use App\Services\OrganizationService;
 use Illuminate\Http\JsonResponse;
-use Illuminate\Http\Request;
 use Illuminate\Http\Response;
 
 class OrganizationController extends Controller
@@ -126,25 +126,6 @@ class OrganizationController extends Controller
     /**
      * @OA\Get(
      *     path="/api/v1/organizations/{activityId}",
-     *     summary="Список всех организаций, относящихся к указанному виду деятельности",
-     *     @OA\Response(
-     *         response=200,
-     *         description="Список всех организаций, относящихся к указанному виду деятельности",
-     *         @OA\JsonContent(
-     *             @OA\Property(property="id", type="integer", example=1),
-     *             @OA\Property(property="building_id", type="integer", example=1),
-     *             @OA\Property(property="name", type="string", example="ООО Рога и Копыта"),
-     *             @OA\Property(property="phone_numbers", type="string", example="{}"),
-     *             @OA\Property(property="created_at", type="string", example="2024-05-20T14:00:00.000000Z"),
-     *             @OA\Property(property="updated_at", type="string", example="2024-05-20T14:00:00.000000Z")
-     *         )
-     *     )
-     * )
-     */
-
-    /**
-     * @OA\Get(
-     *     path="/api/v1/organizations/{activityId}",
      *     summary="Список организаций в здании",
      *     @OA\Parameter(
      *          name="activityId",
@@ -203,7 +184,7 @@ class OrganizationController extends Controller
      *     )
      * )
      */
-    public function search(Request $request): JsonResponse
+    public function search(QueryRequest $request): JsonResponse
     {
         $query = $request->input('query');
         return response()->json($this->organizationService->searchOrganizations($query));
@@ -230,7 +211,7 @@ class OrganizationController extends Controller
      *       ),
      *     @OA\Parameter(
      *            name="radius",
-     *            description="Радиус в километрах"",
+     *            description="Радиус в километрах",
      *            in="query",
      *            required=true,
      *            @OA\Schema(type="number", format="float")
